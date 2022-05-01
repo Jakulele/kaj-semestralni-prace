@@ -1,0 +1,16 @@
+.units {
+    margin-left: 1px;
+}
+
+.form_row {
+    display: block;
+    margin: 5px;
+}
+
+.result_row {
+    margin: 5px;
+}
+
+.result_row > * {
+    margin: 3px;
+}

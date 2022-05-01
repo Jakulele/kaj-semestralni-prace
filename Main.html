@@ -9,8 +9,34 @@
 <body>
     <h1>Vypocet</h1>
     <form>
-        <label for="bruh">Bruh</label>
-        <input type="text" id="bruh">
+        <span class="form_row">
+            <label for="diameter">Nominal Pipe Dia</label>
+            <input type="number" id="diameter">
+            <span class="units">mm</span>
+        </span>
+        <span class="form_row">
+            <label for="volume">Volume Flow</label>
+            <input type="number" id="volume">
+            <span class="units">kg/h</span>
+        </span>
+        <span class="form_row">
+            <label for="glycol">Percentage Glycol</label>
+            <input type="number" id="glycol">
+            <span class="units">%</span>
+        </span>
+        <input type="button" value="Submit" id="submit" onclick="submit()">
     </form>
+    <div>
+        <div class="result_row">
+            <span>Velocity:</span>
+            <span id="velocityValue">0</span>
+            <span>m/s</span>
+        </div>
+        <div class="result_row">
+            <span>Pr. Drop:</span>
+            <span id="dropValue">0</span>
+            <span>Pa/m</span>
+        </div>
+    </div>
 </body>
 </html>
