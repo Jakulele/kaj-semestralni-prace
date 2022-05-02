@@ -1,6 +1,4 @@
-const submitButton = document.getElementById('submit');
-
-function submit() {
+function computeSubmit() {
 
     const diameter = document.getElementById('diameter').value;
     const volume = document.getElementById('volume').value;
@@ -12,5 +10,3 @@ function submit() {
 
     velocity.textContent = velocityResult.toString();
 }
-
-submitButton.addEventListener("click", submit)
