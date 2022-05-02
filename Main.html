@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <title>Trubky</title>
     <link rel="stylesheet" media="all" href="style.css">
-    <script type="text/javascript" src="script.js"></script>
 </head>
 <body>
     <h1>Vypocet</h1>
     <form>
+        <span class="form_row">
+            <label for="material">Pipe Material</label>
+            <select name="vyber" id="material">
+                <option value="hg_bms">HG BMS</option>
+                <option value="mg_bms">MG BMS</option>
+                <option value="gms">GMS</option>
+                <option value="cu">Cu</option>
+                <option value="other">Other</option>
+            </select>
+        </span>
         <span class="form_row">
             <label for="diameter">Nominal Pipe Dia</label>
             <input type="number" id="diameter">
@@ -24,7 +33,7 @@
             <input type="number" id="glycol">
             <span class="units">%</span>
         </span>
-        <input type="button" value="Submit" id="btnSubmit" onclick="computeSubmit()">
+        <input type="button" value="Submit" id="btnSubmit">
     </form>
     <div>
         <div class="result_row">
@@ -39,4 +48,5 @@
         </div>
     </div>
 </body>
+<script type="text/javascript" src="script.js"></script>
 </html>
