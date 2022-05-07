@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Trubky</title>
+    <title>Pipe guide</title>
     <link rel="stylesheet" media="all" href="style.css">
 </head>
 <body>
-    <h1>Vypocet</h1>
+    <h1>Pipe guide</h1>
     <form>
         <span class="form_row">
             <label for="material">Pipe Material</label>
-            <select name="vyber" id="material">
+            <select name="choice" id="material">
                 <option value="hg_bms">HG BMS</option>
                 <option value="mg_bms">MG BMS</option>
                 <option value="gms">GMS</option>
@@ -21,12 +21,20 @@
         <span class="form_row">
             <label for="diameter">Nominal Pipe Dia</label>
             <input type="number" id="diameter">
-            <span class="units">mm</span>
+            <select name="choice" class="unit-select">
+                <option value="mm">mm</option>
+                <option value="cm">cm</option>
+                <option value="dm">dm</option>
+                <option value="m">m</option>
+            </select>
         </span>
         <span class="form_row">
             <label for="volume">Volume Flow</label>
             <input type="number" id="volume">
-            <span class="units">kg/h</span>
+            <select name="choice" class="unit-select">
+                <option value="kgh">kg/h</option>
+                <option value="ls">l/s</option>
+            </select>
         </span>
         <span class="form_row">
             <label for="glycol">Percentage Glycol</label>
@@ -35,7 +43,7 @@
         </span>
         <input type="button" value="Submit" id="btnSubmit">
     </form>
-    <div>
+    <div class="result">
         <div class="result_row">
             <span>Velocity:</span>
             <span id="velocityValue">0</span>
