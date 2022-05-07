@@ -6,6 +6,7 @@ const values = {
     "cu": [10.8, 13.6, 20.2, 26.2, 32.6, 39.6, 51.6, 64.3, 73.2, 105.1, 155.4, 0, 0, 0, 0, 0, 0, 0],
     "other": [10.8, 13.6, 20.2, 26.2, 32.6, 39.6, 51.6, 64.3, 73.2, 105.1, 155.4, 206.5, 258.8, 304, 336, 387, 438, 590]
 }
+const approx_size = [10, 15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300, 350, 400, 450, 600]
 const FLOW_TEMPERATURE = 16
 
 const submitButton = document.querySelector('#btnSubmit')
@@ -17,13 +18,15 @@ function submit() {
     const material = document.getElementById('material').value;
     const diameter = document.getElementById('diameter').value;
     let volume = document.getElementById('volume').value;
-    // volume = volume / 3600 nakonec, prevod na kg/h
+    volume = volume / 3600
     const glycol = document.getElementById('glycol').value;
     const velocity = document.getElementById("velocityValue");
     const prDrop = document.getElementById("dropValue");
     const eqL = document.getElementById("eqValue");
+    const approxSize = document.getElementById("approxSize");
 
     const internalDiameter = findInternalPipeDia(material, diameter);
+    console.log(internalDiameter)
 
     let velocityResult = calculateVelocity(volume, internalDiameter);
 
@@ -31,6 +34,7 @@ function submit() {
     const kinematicViscosity = calculateKinematicViscosity(glycol);
     const absoluteViscosity = calculateAbsoluteViscosity(relativeDensity, kinematicViscosity);
     const reynoldsNumber = calculateReynoldsNumber(velocityResult, internalDiameter, relativeDensity, absoluteViscosity);
+    const approxSizeValue = approximateSize(volume);
 
     let prDropValue = calculatePrDrop(relativeDensity, velocityResult, reynoldsNumber, internalDiameter, material);
 
@@ -39,10 +43,16 @@ function submit() {
     velocity.textContent = velocityResult.toFixed(2).toString();
     prDrop.textContent = prDropValue.toFixed(0).toString();
     eqL.textContent = eqLValue.toFixed(1).toString();
+    approxSize.textContent = approxSizeValue.toString();
 }
 
 function findInternalPipeDia(material, diameter) {
-    const index = head.indexOf(parseInt(diameter))
+    let index = 0;
+    for (let i = 0; i < head.length; i++) {
+        if (head[i] <= diameter) {
+            index = i;
+        }
+    }
     const arr = values[material]
     return arr[index]
 }
@@ -126,4 +136,34 @@ function calculatePrDrop(relativeDensity, velocity, reynoldsNumber, internalDiam
 
 function calculateEqL(relativeDensity, velocity, prDrop) {
     return (0.5 * relativeDensity * 1000 * Math.pow(velocity, 2)) / prDrop;
+}
+
+function approximateSize(volume) {
+    let n = 0;
+    for (let size of approx_size) {
+        n = (volume / 1000) / (3.14159 * Math.pow(size / 2000, 2))
+        if (size === 15) {
+            if (n > 0.65 && n < 1.5) {
+                return size;
+            }
+            continue
+        }
+        if (size <= 50) {
+            if (n > 0.75 && n < 1.5) {
+                return size;
+            }
+            continue
+        }
+        if (size <= 65) {
+            if (n > 0.85 && n < 3) {
+                return size;
+            }
+            continue
+        }
+        if (size > 65) {
+            if (n > 1.25 && n < 3) {
+                return size;
+            }
+        }
+    }
 }
