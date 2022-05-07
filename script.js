@@ -16,10 +16,12 @@ function submit() {
 
     const material = document.getElementById('material').value;
     const diameter = document.getElementById('diameter').value;
-    const volume = document.getElementById('volume').value;
+    let volume = document.getElementById('volume').value;
+    // volume = volume / 3600 nakonec, prevod na kg/h
     const glycol = document.getElementById('glycol').value;
     const velocity = document.getElementById("velocityValue");
     const prDrop = document.getElementById("dropValue");
+    const eqL = document.getElementById("eqValue");
 
     const internalDiameter = findInternalPipeDia(material, diameter);
 
@@ -32,8 +34,11 @@ function submit() {
 
     let prDropValue = calculatePrDrop(relativeDensity, velocityResult, reynoldsNumber, internalDiameter, material);
 
+    let eqLValue = calculateEqL(relativeDensity, velocityResult, prDropValue);
+
     velocity.textContent = velocityResult.toFixed(2).toString();
     prDrop.textContent = prDropValue.toFixed(0).toString();
+    eqL.textContent = eqLValue.toFixed(1).toString();
 }
 
 function findInternalPipeDia(material, diameter) {
@@ -117,4 +122,8 @@ function calculatePrDrop(relativeDensity, velocity, reynoldsNumber, internalDiam
     } else {
         return calculateTurbulentDarcy(reynoldsNumber, relativeDensity, velocity, internalDiameter, material);
     }
+}
+
+function calculateEqL(relativeDensity, velocity, prDrop) {
+    return (0.5 * relativeDensity * 1000 * Math.pow(velocity, 2)) / prDrop;
 }
