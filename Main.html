@@ -6,64 +6,67 @@
     <link rel="stylesheet" media="all" href="style.css">
 </head>
 <body>
-    <h1>Pipe guide</h1>
-    <form>
-        <span class="form_row">
-            <label for="material">Pipe Material</label>
-            <select name="choice" id="material">
-                <option value="hg_bms">HG BMS</option>
-                <option value="mg_bms">MG BMS</option>
-                <option value="gms">GMS</option>
-                <option value="cu">Cu</option>
-                <option value="other">Other</option>
-            </select>
-        </span>
-        <span class="form_row">
-            <label for="diameter">Nominal Pipe Dia</label>
-            <input type="number" id="diameter">
-            <select name="choice" class="unit-select">
-                <option value="mm">mm</option>
-                <option value="cm">cm</option>
-                <option value="dm">dm</option>
-                <option value="m">m</option>
-            </select>
-        </span>
-        <span class="form_row">
-            <label for="volume">Volume Flow</label>
-            <input type="number" id="volume">
-            <select name="choice" class="unit-select">
-                <option value="kgh">kg/h</option>
-                <option value="ls">l/s</option>
-            </select>
-        </span>
-        <span class="form_row">
-            <label for="glycol">Percentage Glycol</label>
-            <input type="number" id="glycol">
-            <span class="units">%</span>
-        </span>
-        <input type="button" value="Submit" id="btnSubmit">
-    </form>
-    <div class="result">
-        <div class="result_row">
-            <span>Velocity:</span>
-            <span id="velocityValue">0</span>
-            <span>m/s</span>
+    <section>
+        <h1>Pipe guide</h1>
+        <form>
+            <span class="form_row">
+                <label for="material">Pipe Material</label>
+                <select name="choice" id="material">
+                    <option value="hg_bms">HG BMS</option>
+                    <option value="mg_bms">MG BMS</option>
+                    <option value="gms">GMS</option>
+                    <option value="cu">Cu</option>
+                    <option value="other">Other</option>
+                </select>
+            </span>
+            <div class="form_row">
+                <label for="diameter">Nominal Pipe Dia</label>
+                <input type="number" id="diameter" required />
+                <select name="choice" class="unit-select">
+                    <option value="mm">mm</option>
+                    <option value="cm">cm</option>
+                    <option value="dm">dm</option>
+                    <option value="m">m</option>
+                </select>
+            </div>
+            <span class="form_row">
+                <label for="volume">Volume Flow</label>
+                <input type="number" id="volume" required />
+                <select name="choice" class="unit-select">
+                    <option value="kgh">kg/h</option>
+                    <option value="ls">l/s</option>
+                </select>
+            </span>
+            <span class="form_row">
+                <label for="glycol">Percentage Glycol</label>
+                <input type="number" id="glycol">
+                <span class="units">%</span>
+            </span>
+            <input type="button" value="Submit" id="btnSubmit">
+        </form>
+        <div class="result">
+            <div class="result_row">
+                <span>Velocity:</span>
+                <span id="velocityValue">0</span>
+                <span>m/s</span>
+            </div>
+            <div class="result_row">
+                <span>Pr. Drop:</span>
+                <span id="dropValue">0</span>
+                <span>Pa/m</span>
+            </div>
+            <div class="result_row">
+                <span>Eq. L:</span>
+                <span id="eqValue">0</span>
+                <span>m</span>
+            </div>
+            <div class="result_row">
+                <span>Approximate Sizing Guide:</span>
+                <span id="approxSize">0</span>
+            </div>
         </div>
-        <div class="result_row">
-            <span>Pr. Drop:</span>
-            <span id="dropValue">0</span>
-            <span>Pa/m</span>
-        </div>
-        <div class="result_row">
-            <span>Eq. L:</span>
-            <span id="eqValue">0</span>
-            <span>m</span>
-        </div>
-        <div class="result_row">
-            <span>Approximate Sizing Guide:</span>
-            <span id="approxSize">0</span>
-        </div>
-    </div>
+        <svg viewbox="0 0 600 600"></svg>
+    </section>
+    <script src="script.js"></script>
 </body>
-<script type="text/javascript" src="script.js"></script>
 </html>

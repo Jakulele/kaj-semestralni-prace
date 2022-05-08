@@ -6,9 +6,33 @@ body {
 
 form {
     background: gold;
-    border-radius: 10px;
     padding: 10px;
-    width: 30%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section {
+    background: lightblue;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.result {
+    display: flex;
+    padding: 10px;
+    background: darkorange;
+
+}
+
+input[type=button] {
+    display: block;
+    margin-right: 10px;
+    margin-left: auto;
 }
 
 input, select {
@@ -16,8 +40,18 @@ input, select {
     border-style: solid;
     border-width: thin;
     border-color: black;
-    font-size: large;
+    font-size: medium;
     padding: 10px 5px 10px 5px;
+    display: block;
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+.units {
+    display: block;
+    margin-right: 10px;
+    margin-left: auto;
+    text-align: right;
 }
 
 .unit-select {
@@ -35,6 +69,7 @@ input, select {
 }
 
 .result_row {
+    display: block;
     margin: 5px;
 }
 

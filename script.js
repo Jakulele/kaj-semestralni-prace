@@ -14,7 +14,6 @@ const submitButton = document.querySelector('#btnSubmit')
 submitButton.addEventListener('click', submit)
 
 function submit() {
-
     const material = document.getElementById('material').value;
     const diameter = document.getElementById('diameter').value;
     let volume = document.getElementById('volume').value;
@@ -24,9 +23,9 @@ function submit() {
     const prDrop = document.getElementById("dropValue");
     const eqL = document.getElementById("eqValue");
     const approxSize = document.getElementById("approxSize");
+    const svg = document.querySelector('svg');
 
     const internalDiameter = findInternalPipeDia(material, diameter);
-    console.log(internalDiameter)
 
     let velocityResult = calculateVelocity(volume, internalDiameter);
 
@@ -39,6 +38,8 @@ function submit() {
     let prDropValue = calculatePrDrop(relativeDensity, velocityResult, reynoldsNumber, internalDiameter, material);
 
     let eqLValue = calculateEqL(relativeDensity, velocityResult, prDropValue);
+
+    drawCircle(approxSizeValue, svg);
 
     velocity.textContent = velocityResult.toFixed(2).toString();
     prDrop.textContent = prDropValue.toFixed(0).toString();
@@ -167,3 +168,21 @@ function approximateSize(volume) {
         }
     }
 }
+
+function drawCircle(r, svg) {
+    svg.innerHTML = "";
+    const outer = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    outer.setAttributeNS(null, "cx", "100");
+    outer.setAttributeNS(null, "cy", "100");
+    outer.setAttributeNS(null, "r", r);
+    outer.setAttributeNS(null, "fill", "darkgrey");
+    svg.appendChild(outer);
+    const rs = r - r / 10;
+    const inner = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    inner.setAttributeNS(null, "cx", "100");
+    inner.setAttributeNS(null, "cy", "100");
+    inner.setAttributeNS(null, "r", rs.toString());
+    inner.setAttributeNS(null, "fill", "darkorange");
+    svg.appendChild(inner);
+}
+
