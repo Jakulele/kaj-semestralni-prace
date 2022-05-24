@@ -1,3 +1,4 @@
+// calculations' support values
 const head = [10, 15, 20, 25, 32, 40, 50, 65, 80, 100, 150, 200, 250, 300, 350, 400, 450, 600]
 const values = {
     "hg_bms": [11.2, 14.9, 20.4, 25.7, 34.3, 40.2, 51.3, 67, 79, 103.3, 154.3, 206.5, 258.8, 304.8, 336.6, 387.4, 438, 590],
@@ -14,37 +15,54 @@ const submitButton = document.querySelector('#btnSubmit')
 submitButton.addEventListener('click', submit)
 
 function submit() {
+    // user input values
     const material = document.getElementById('material').value;
     const diameter = document.getElementById('diameter').value;
     let volume = document.getElementById('volume').value;
     volume = volume / 3600
     const glycol = document.getElementById('glycol').value;
+
+    checkInput(diameter, volume, glycol)
+
+    // selecting result fields
     const velocity = document.getElementById("velocityValue");
     const prDrop = document.getElementById("dropValue");
     const eqL = document.getElementById("eqValue");
     const approxSize = document.getElementById("approxSize");
     const svg = document.querySelector('svg');
 
+    // result calculations
     const internalDiameter = findInternalPipeDia(material, diameter);
-
     let velocityResult = calculateVelocity(volume, internalDiameter);
-
     const relativeDensity = calculateRelativeDensity(glycol);
     const kinematicViscosity = calculateKinematicViscosity(glycol);
     const absoluteViscosity = calculateAbsoluteViscosity(relativeDensity, kinematicViscosity);
     const reynoldsNumber = calculateReynoldsNumber(velocityResult, internalDiameter, relativeDensity, absoluteViscosity);
     const approxSizeValue = approximateSize(volume);
-
     let prDropValue = calculatePrDrop(relativeDensity, velocityResult, reynoldsNumber, internalDiameter, material);
-
     let eqLValue = calculateEqL(relativeDensity, velocityResult, prDropValue);
 
+    // update values to result fields
     drawCircle(approxSizeValue, svg);
-
     velocity.textContent = velocityResult.toFixed(2).toString();
     prDrop.textContent = prDropValue.toFixed(0).toString();
     eqL.textContent = eqLValue.toFixed(1).toString();
     approxSize.textContent = approxSizeValue.toString();
+}
+
+function checkInput(diameter, volume, glycol) {
+    let textDiameter;
+    let textVolume;
+    let textGlycol;
+    if (isNaN(diameter) || diameter < 0) {
+        textDiameter = "Hodnota musí být větší než 0";
+    }
+    if (isNaN(volume) || diameter < 0) {
+        textVolume = "Hodnota musí být větší než 0";
+    }
+    if (isNaN(glycol) || diameter < 0) {
+        textGlycol = "Neplatná hodnota";
+    }
 }
 
 function findInternalPipeDia(material, diameter) {
@@ -177,7 +195,7 @@ function drawCircle(r, svg) {
     outer.setAttributeNS(null, "r", r);
     outer.setAttributeNS(null, "fill", "darkgrey");
     svg.appendChild(outer);
-    const rs = r - r / 10;
+    const rs = r - r / 50;
     const inner = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     inner.setAttributeNS(null, "cx", "100");
     inner.setAttributeNS(null, "cy", "100");
