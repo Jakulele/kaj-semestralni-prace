@@ -1,3 +1,5 @@
+/** { border: 1px solid red; }*/
+
 body {
     font-family: Helvetica, Arial, sans-serif;
     font-size: large;
@@ -10,6 +12,7 @@ form {
     float: left;
     margin-left: auto;
     margin-right: auto;
+    overflow: auto;
 }
 
 section {
@@ -48,19 +51,24 @@ input, select {
 }
 
 .units {
-    display: block;
-    margin-right: 10px;
-    margin-left: auto;
+    float: right;
     text-align: right;
+    width: fit-content;
+}
+
+.error {
+    float: left;
+    padding: 3px;
+    display: inline-block;
+    max-width: 140px;
+    font-size: medium;
+    color: red;
+    font-weight: bold;
 }
 
 .unit-select {
     background-color: transparent;
     border-style: none;
-}
-
-.units {
-    margin-left: 1px;
 }
 
 .form_row {
@@ -78,8 +86,8 @@ input, select {
 }
 
 svg {
-    border-color: red;
-    border-width: 3px;
-    border-style: solid;
+    /*border-color: red;*/
+    /*border-width: 3px;*/
+    /*border-style: solid;*/
     float: left;
 }
