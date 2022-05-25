@@ -1,9 +1,6 @@
 import {Calculation} from "./class.js";
 
-const submitButton = document.querySelector('#btnSubmit')
-
-submitButton.addEventListener('click', submit)
-
+// pressing Enter while in form simulates Submit button click
 const form = document.querySelector("form")
 
 form.addEventListener("keypress", function(e) {
@@ -13,6 +10,13 @@ form.addEventListener("keypress", function(e) {
     }
 });
 
+const submitButton = document.querySelector('#btnSubmit')
+
+submitButton.addEventListener('click', submit)
+
+/**
+ * Calculates using the user input values
+ */
 function submit() {
     // user input values
     const material = document.getElementById('material').value;
@@ -70,6 +74,13 @@ function convertVolumeUnits(volume) {
     return volume
 }
 
+/**
+ * Checks if user input values are valid for calculations
+ * @param diameter must be higher than 0
+ * @param volume must be higher than 0
+ * @param glycol must be a percentage value (0-100)
+ * @returns {boolean} true if valid, false if invalid
+ */
 function checkInput(diameter, volume, glycol) {
     let valid = true;
     const diameterError = document.getElementById("diameterError");
@@ -116,3 +127,14 @@ function drawCircle(r, svg) {
     svg.appendChild(inner);
 }
 
+
+// clear all input fields on btnClear click
+const btnClear = document.querySelector("#btnClear")
+
+btnClear.addEventListener("click", function(e) {
+    const toClear = document.querySelectorAll("input[type='number'], select")
+    for (const elem of toClear) {
+        elem.value = "0";
+        elem.selectedIndex = "0";
+    }
+});
