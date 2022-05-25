@@ -9,17 +9,15 @@ body {
 form {
     background: gold;
     padding: 10px;
-    float: left;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: auto;
+    margin: 5px;
 }
 
 section {
     background: lightblue;
     padding: 10px;
     border-radius: 10px;
-    overflow: auto;
+    display: flex;
+    justify-content: center;
 }
 
 h1 {
@@ -29,13 +27,13 @@ h1 {
 .result {
     padding: 10px;
     background: darkorange;
-    float: left;
+    margin: 5px;
 }
 
-input[type=button] {
-    display: block;
-    margin-right: 10px;
-    margin-left: auto;
+#buttons {
+    clear: both;
+    display: flex;
+    float: right;
 }
 
 input, select {
@@ -48,6 +46,13 @@ input, select {
     display: block;
     margin-right: 10px;
     margin-left: auto;
+}
+
+input[type=button] {
+    width: 100px;
+    font-weight: bold;
+    background: white;
+    border-width: 2px;
 }
 
 .units {

@@ -6,8 +6,8 @@
     <link rel="stylesheet" media="all" href="style.css">
 </head>
 <body>
+    <h1>Pipe guide</h1>
     <section>
-        <h1>Pipe guide</h1>
         <form>
             <span class="form_row">
                 <label for="material">Pipe Material</label>
@@ -44,7 +44,10 @@
                 <span class="error" id="percentageError"></span>
                 <span class="units" style="padding: 10px;">%</span>
             </span>
-            <input type="button" value="Submit" id="btnSubmit">
+            <span id="buttons">
+                <input type="button" value="Clear" id="btnClear" style="color: red; border-color: red">
+                <input type="button" value="Submit" id="btnSubmit" style="color: green; border-color: green">
+            </span>
         </form>
         <div class="result">
             <div class="result_row">
@@ -62,8 +65,8 @@
                 <span id="eqValue">0</span>
                 <span>m</span>
             </div>
-            <div class="result_row">
-                <span>Approximate Sizing Guide:</span>
+            <div class="result_row" style="padding-top: 10px">
+                <span>Approximate Sizing Guide:</span><br>
                 <span id="approxSize">0</span>
             </div>
             <svg viewbox="0 0 100 100"></svg>

@@ -14,6 +14,15 @@ const submitButton = document.querySelector('#btnSubmit')
 
 submitButton.addEventListener('click', submit)
 
+const form = document.querySelector("form")
+
+form.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        submitButton.click();
+    }
+});
+
 function submit() {
     // user input values
     const material = document.getElementById('material').value;
@@ -89,15 +98,15 @@ function checkInput(diameter, volume, glycol) {
     percentageError.textContent = "";
     if (!(diameter > 0)) {
         valid = false;
-        diameterError.textContent = "Hodnota musí být větší než 0";
+        diameterError.textContent = "Value must be greater than 0";
     }
     if (!(volume > 0)) {
         valid = false;
-        volumeError.textContent = "Hodnota musí být větší než 0";
+        volumeError.textContent = "Value must be greater than 0";
     }
     if (!(glycol >= 0 && glycol <= 100)) {
         valid = false;
-        percentageError.textContent = "Neplatná hodnota";
+        percentageError.textContent = "Invalid value";
     }
     return valid;
 }
