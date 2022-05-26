@@ -4,18 +4,24 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     font-size: large;
     margin: 5%;
+    background: #ECECEC;
 }
 
 form {
-    background: gold;
+    background: #5DA2D5;
     padding: 10px;
-    margin: 5px;
+    margin: 5px 0 5px 5px;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
 }
 
 section {
-    background: lightblue;
     padding: 10px;
     border-radius: 10px;
+    background: #F3D250;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     justify-content: center;
 }
@@ -26,14 +32,15 @@ h1 {
 
 h2 {
     margin: 5px;
-    position: -webkit-sticky;
-    position: sticky;
+    float: left;
 }
 
 .result {
     padding: 10px;
-    background: darkorange;
-    margin: 5px;
+    background: #90CCF4;
+    margin: 5px 5px 5px 0;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 #buttons {
@@ -54,13 +61,7 @@ input, select {
     margin-left: auto;
 }
 
-input[type=button] {
-    min-width: 100px;
-    width: fit-content;
-    font-weight: bold;
-    background: white;
-    border-width: 2px;
-}
+
 
 input[type=button]:hover {
     background: lightgray;
@@ -68,7 +69,15 @@ input[type=button]:hover {
 
 input[type=button]:active {
     background: gray;
+    color: white;
 }
+
+ input[type=button] {
+     min-width: 100px;
+     width: fit-content;
+     font-weight: bold;
+     border-width: 2px;
+ }
 
 .units {
     float: right;
@@ -112,18 +121,34 @@ svg {
 .history {
     overflow-y: auto;
     overflow-x: hidden;
-    border: 1px solid red;
-    width: 30%;
     margin: 5px;
+    max-height: 400px;
+    border: 1px solid black;
+}
+
+.wrap_history {
+    width: 30%;
+    margin: 5px 5px 5px 5%;
+    background: #C4DBF6;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 .history_row {
-    border: 1px solid red;
+    border: 1px solid black;
     display: inline-flex;
     width: 100%;
     padding: 10px;
 }
 
-div span:nth-child(2){
+.history_row:hover {
+    background: lightgray;
+}
+
+.history_row:active {
+    background: gray;
+}
+
+div span:nth-child(2) {
     font-weight: bold;
 }

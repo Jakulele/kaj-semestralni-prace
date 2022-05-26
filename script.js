@@ -55,17 +55,19 @@ function submit() {
     drawCircle(calculation.approxSize[approxSizeMid], svgEl);
 
     saveCalculation(calculation);
+    const values = localStorageToArray();
+    appendToHistory([values[0]]);
 }
 
 const btnClearHistory = document.querySelector("#btnClearHistory")
 
 btnClearHistory.addEventListener("click", function(e) {
     localStorage.clear();
+    const values = localStorageToArray();
+    appendToHistory(values);
 });
 
 function saveCalculation(c) {
-    const calculation = JSON.stringify([c.material, c.diameter, c.diaUnits,
-        c.volume, c.volumeUnits, c.glycol, c.velocity, c.prDrop, c.eqL, c.approxSize])
     const keys = Object.keys(localStorage);
     if (keys.length === 10) {
         let lowest = parseInt(keys[0])
@@ -85,10 +87,17 @@ function saveCalculation(c) {
             }
         }
     }
+    const calculation = JSON.stringify([highest + 1, c.material, c.diameter, c.diaUnits,
+        c.volume, c.volumeUnits, c.glycol, c.velocity.toFixed(2), c.prDrop | 0, c.eqL.toFixed(1), c.approxSize])
     localStorage.setItem((highest + 1).toString(), calculation);
 }
 
 window.onload = function () {
+    const values = localStorageToArray();
+    appendToHistory(values);
+}
+
+function localStorageToArray() {
     let values = [];
     const keys = Object.keys(localStorage);
     let highest = -1;
@@ -108,7 +117,28 @@ window.onload = function () {
         values.push(JSON.parse(item));
     }
 
-    console.log(values);
+    return values;
+}
+
+function appendToHistory (values) {
+    const history = document.querySelector('.history');
+    const btnClearHistory = document.getElementById("btnClearHistory");
+    for (let value of values) {
+        const span = document.createElement("span");
+        span.className = "history_row";
+        span.style.fontWeight = "normal";
+        const id = document.createElement("p");
+        id.hidden = true;
+        id.textContent = value[0];
+        span.appendChild(id);
+        value[1] = value[1].toUpperCase();
+        value[1] = value[1].replace("_", " ");
+        const text = document.createTextNode(value[1]  + ", " + value[2] + " " + value[3] + ", " +
+            value[4] + " " + value[5] + ", " + value[6] + " % = " + value[7] + " m/s, " + value[8] + " Pa/m, " +
+        value[9] + " m, size: " + value[10]);
+        span.appendChild(text);
+        history.appendChild(span);
+    }
 }
 
 /**
