@@ -41,6 +41,7 @@ h2 {
     margin: 5px 5px 5px 0;
     border-bottom-right-radius: 15px;
     border-top-right-radius: 15px;
+    min-width: fit-content;
 }
 
 #buttons {
@@ -132,6 +133,7 @@ svg {
     background: #C4DBF6;
     padding: 10px;
     border-radius: 15px;
+    min-width: 30%;
 }
 
 .history_row {

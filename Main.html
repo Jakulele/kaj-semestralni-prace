@@ -5,13 +5,13 @@
     <title>Pipe guide</title>
     <link rel="stylesheet" media="all" href="style.css">
 </head>
-<body onload="loadHistory()">
+<body>
     <h1>Pipe guide</h1>
     <section>
         <form>
             <span class="form_row">
                 <label for="material">Pipe Material</label>
-                <select name="choice" id="material">
+                <select name="choice" id="material" tabindex="1">
                     <option value="hg_bms">HG BMS</option>
                     <option value="mg_bms">MG BMS</option>
                     <option value="gms">GMS</option>
@@ -21,7 +21,7 @@
             </span>
             <div class="form_row">
                 <label for="diameter">Nominal Pipe Dia</label>
-                <input type="number" min="0" value="0" id="diameter" required />
+                <input type="number" min="0" value="0" id="diameter" tabindex="2" required />
                 <span class="error" id="diameterError"></span>
                 <select name="choice" class="unit-select" id="diaUnits">
                     <option value="mm">mm</option>
@@ -31,7 +31,7 @@
             </div>
             <span class="form_row">
                 <label for="volume">Volume Flow</label>
-                <input type="number" min="0" value="0" id="volume" required />
+                <input type="number" min="0" value="0" id="volume" tabindex="3" required />
                 <span class="error" id="volumeError"></span>
                 <select name="choice" class="unit-select" id="volumeUnits">
                     <option value="kgh">kg/h</option>
@@ -40,13 +40,13 @@
             </span>
             <span class="form_row">
                 <label for="glycol">Percentage Glycol</label>
-                <input type="number" value="0" id="glycol">
+                <input type="number" value="0" tabindex="4" id="glycol">
                 <span class="error" id="percentageError"></span>
                 <span class="units" style="padding: 10px;">%</span>
             </span>
             <span id="buttons">
                 <input type="button" value="Clear" id="btnClear" style="color: red; border-color: red">
-                <input type="button" value="Submit" id="btnSubmit" style="color: green; border-color: green">
+                <input type="button" value="Submit" id="btnSubmit" tabindex="5" style="color: green; border-color: green">
             </span>
         </form>
         <div class="result">

@@ -61,7 +61,7 @@ function submit() {
 
 const btnClearHistory = document.querySelector("#btnClearHistory")
 
-btnClearHistory.addEventListener("click", function(e) {
+btnClearHistory.addEventListener("click", function() {
     localStorage.clear();
     const values = localStorageToArray();
     appendToHistory(values);
@@ -87,7 +87,7 @@ function saveCalculation(c) {
             }
         }
     }
-    const calculation = JSON.stringify([highest + 1, c.material, c.diameter, c.diaUnits,
+    const calculation = JSON.stringify([c.material, c.diameter, c.diaUnits,
         c.volume, c.volumeUnits, c.glycol, c.velocity.toFixed(2), c.prDrop | 0, c.eqL.toFixed(1), c.approxSize])
     localStorage.setItem((highest + 1).toString(), calculation);
 }
@@ -120,24 +120,56 @@ function localStorageToArray() {
     return values;
 }
 
+function reloadHistory(material, diameter, diaUnits, volume, volumeUnits, glycol) {
+    document.getElementById('material').value = material;
+    document.getElementById('diameter').value = diameter;
+    document.getElementById('diaUnits').value = diaUnits;
+    document.getElementById('volume').value = volume;
+    document.getElementById('volumeUnits').value = volumeUnits;
+    document.getElementById('glycol').value = glycol;
+}
+
 function appendToHistory (values) {
     const history = document.querySelector('.history');
-    const btnClearHistory = document.getElementById("btnClearHistory");
+    if (values.length === 0) {
+        while (history.firstChild) {
+            history.removeChild(history.lastChild);
+        }
+        return
+    }
+    if (history.children.length === 10) {
+        history.removeChild(history.lastChild);
+    }
     for (let value of values) {
         const span = document.createElement("span");
         span.className = "history_row";
         span.style.fontWeight = "normal";
-        const id = document.createElement("p");
-        id.hidden = true;
-        id.textContent = value[0];
-        span.appendChild(id);
-        value[1] = value[1].toUpperCase();
-        value[1] = value[1].replace("_", " ");
-        const text = document.createTextNode(value[1]  + ", " + value[2] + " " + value[3] + ", " +
-            value[4] + " " + value[5] + ", " + value[6] + " % = " + value[7] + " m/s, " + value[8] + " Pa/m, " +
-        value[9] + " m, size: " + value[10]);
+        let zeroStripped = value[0].toString().toUpperCase();
+        zeroStripped = zeroStripped.replace("_", " ");
+        if (zeroStripped === "CU") {
+            zeroStripped = "Cu";
+        }
+        if (zeroStripped === "OTHER") {
+            zeroStripped = "Other";
+        }
+        let fourStripped = "";
+        if (value[4] === "ls") {
+            fourStripped = "l/s";
+        }
+        if (value[4] === "kgh") {
+            fourStripped = "kg/h";
+        }
+        const threeStripped = value[3].toString().substring(0, 10);
+        const text = document.createTextNode(zeroStripped  + ", " + value[1] + "\xa0" + value[2] + ", " +
+            threeStripped + "\xa0" + fourStripped + ", " + value[5] + "\xa0% = " + value[6] + "\xa0m/s, " + value[7] + "\xa0Pa/m, " +
+        value[8] + " m, size: " + value[9]);
         span.appendChild(text);
-        history.appendChild(span);
+        span.onclick = function() {reloadHistory(value[0], value[1], value[2], value[3], value[4], value[5])};
+        if (history.children.length === 0) {
+            history.appendChild(span);
+        } else {
+            history.insertBefore(span, history.firstChild);
+        }
     }
 }
 
@@ -198,7 +230,7 @@ function drawCircle(r, svg) {
 // clear all input fields on btnClear click
 const btnClear = document.querySelector("#btnClear")
 
-btnClear.addEventListener("click", function(e) {
+btnClear.addEventListener("click", function() {
     const toClear = document.querySelectorAll("input[type='number'], select")
     for (const elem of toClear) {
         elem.value = "0";
