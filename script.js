@@ -20,10 +20,10 @@ submitButton.addEventListener('click', submit)
 function submit() {
     // user input values
     const material = document.getElementById('material').value;
-    let diameter = document.getElementById('diameter').value;
-    diameter = convertDiameterUnits(diameter);
-    let volume = document.getElementById('volume').value;
-    volume = convertVolumeUnits(volume);
+    const diameter = document.getElementById('diameter').value;
+    const diaUnits = document.getElementById('diaUnits').value;
+    const volume = document.getElementById('volume').value;
+    const volumeUnits = document.getElementById('volumeUnits').value;
     const glycol = document.getElementById('glycol').value;
 
     // selecting result fields
@@ -44,7 +44,7 @@ function submit() {
         return
     }
 
-    let calculation = new Calculation(material, diameter, volume, glycol);
+    let calculation = new Calculation(material, diameter, diaUnits, volume, volumeUnits, glycol);
 
     // update values to result fields
     velocityEl.textContent = calculation.velocity.toFixed(2).toString();
@@ -53,25 +53,62 @@ function submit() {
     approxSizeEl.textContent = calculation.approxSize.toString();
     const approxSizeMid = (calculation.approxSize.length / 2) | 0;
     drawCircle(calculation.approxSize[approxSizeMid], svgEl);
+
+    saveCalculation(calculation);
 }
 
-function convertDiameterUnits(diameter) {
-    const diameterUnits = document.getElementById('diaUnits');
-    if (diameterUnits.value === "cm") {
-        return diameter * 10;
+const btnClearHistory = document.querySelector("#btnClearHistory")
+
+btnClearHistory.addEventListener("click", function(e) {
+    localStorage.clear();
+});
+
+function saveCalculation(c) {
+    const calculation = JSON.stringify([c.material, c.diameter, c.diaUnits,
+        c.volume, c.volumeUnits, c.glycol, c.velocity, c.prDrop, c.eqL, c.approxSize])
+    const keys = Object.keys(localStorage);
+    if (keys.length === 10) {
+        let lowest = parseInt(keys[0])
+        for (let i of keys) {
+            if (parseInt(i) < lowest) {
+                lowest = parseInt(i);
+            }
+        }
+        localStorage.removeItem(lowest.toString());
     }
-    if (diameterUnits.value === "dm") {
-        return diameter * 100;
+    let highest = -1;
+    if (keys.length > 0) {
+        highest = parseInt(keys[0])
+        for (let i of keys) {
+            if (parseInt(i) > highest) {
+                highest = parseInt(i);
+            }
+        }
     }
-    return diameter
+    localStorage.setItem((highest + 1).toString(), calculation);
 }
 
-function convertVolumeUnits(volume) {
-    const volumeUnits = document.getElementById('volumeUnits');
-    if (volumeUnits.value === "kgh") {
-        return volume / 3600;
+window.onload = function () {
+    let values = [];
+    const keys = Object.keys(localStorage);
+    let highest = -1;
+    if (keys.length > 0) {
+        highest = parseInt(keys[0])
+        for (let i of keys) {
+            if (parseInt(i) > highest) {
+                highest = parseInt(i);
+            }
+        }
     }
-    return volume
+    if (highest === -1) return [];
+    highest++;
+    while (highest--) {
+        let item = localStorage.getItem(highest.toString())
+        if (!item) break;
+        values.push(JSON.parse(item));
+    }
+
+    console.log(values);
 }
 
 /**

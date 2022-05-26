@@ -1,7 +1,9 @@
-export function Calculation (material, diameter, volume, glycol) {
+export function Calculation (material, diameter, diaUnits, volume, volumeUnits, glycol) {
     this.material = material;
-    this.diameter = diameter;
-    this.volume = volume;
+    this.diaUnits = diaUnits;
+    this.diameter = this.convertDiameterUnits(diameter);
+    this.volumeUnits = volumeUnits;
+    this.volume = this.convertVolumeUnits(volume);
     this.glycol = glycol;
     this.flow_temperature = 16;
     this.internalDiameter = this.calculateInternalPipeDia(this.material, this.diameter);
@@ -143,6 +145,23 @@ Calculation.prototype.calculateAbsoluteRoughness = function (material) {
     }
 }
 
+Calculation.prototype.convertDiameterUnits = function (diameter) {
+    if (this.diaUnits === "cm") {
+        return diameter * 10;
+    }
+    if (this.diaUnits === "dm") {
+        return diameter * 100;
+    }
+    return diameter
+}
+
+Calculation.prototype.convertVolumeUnits = function (volume) {
+    if (this.volumeUnits === "kgh") {
+        return volume / 3600;
+    }
+    return volume
+}
+
 // calculations' support values
 const head = [10, 15, 20, 25, 32, 40, 50, 65, 80, 100, 150, 200, 250, 300, 350, 400, 450, 600];
 const values = {
@@ -153,7 +172,3 @@ const values = {
     "other": [10.8, 13.6, 20.2, 26.2, 32.6, 39.6, 51.6, 64.3, 73.2, 105.1, 155.4, 206.5, 258.8, 304, 336, 387, 438, 590]
 };
 const approx_size = [10, 15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300, 350, 400, 450, 600];
-
-export function History (calculation) {
-    return undefined
-}

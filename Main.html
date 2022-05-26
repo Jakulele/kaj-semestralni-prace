@@ -5,7 +5,7 @@
     <title>Pipe guide</title>
     <link rel="stylesheet" media="all" href="style.css">
 </head>
-<body>
+<body onload="loadHistory()">
     <h1>Pipe guide</h1>
     <section>
         <form>
@@ -73,6 +73,8 @@
         </div>
         <div class="history">
             <h2>History</h2>
+            <span class="history_row" style="font-weight: normal">TEST JAKDYBY</span>
+            <input type="button" value="Clear history" id="btnClearHistory" style="border-color: red; color: red">
         </div>
     </section>
     <script type="module" src="script.js"></script>

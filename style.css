@@ -24,6 +24,12 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    margin: 5px;
+    position: -webkit-sticky;
+    position: sticky;
+}
+
 .result {
     padding: 10px;
     background: darkorange;
@@ -49,10 +55,19 @@ input, select {
 }
 
 input[type=button] {
-    width: 100px;
+    min-width: 100px;
+    width: fit-content;
     font-weight: bold;
     background: white;
     border-width: 2px;
+}
+
+input[type=button]:hover {
+    background: lightgray;
+}
+
+input[type=button]:active {
+    background: gray;
 }
 
 .units {
@@ -91,8 +106,24 @@ input[type=button] {
 }
 
 svg {
-    /*border-color: red;*/
-    /*border-width: 3px;*/
-    /*border-style: solid;*/
     float: left;
+}
+
+.history {
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid red;
+    width: 30%;
+    margin: 5px;
+}
+
+.history_row {
+    border: 1px solid red;
+    display: inline-flex;
+    width: 100%;
+    padding: 10px;
+}
+
+div span:nth-child(2){
+    font-weight: bold;
 }
