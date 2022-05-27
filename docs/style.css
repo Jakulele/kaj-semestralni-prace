@@ -194,11 +194,11 @@ div span:nth-child(2) {
     }
 
     svg {
-        padding: 5px 30px 5px 30px;
+        padding: 5px 15px 5px 15px;
     }
 
     .history {
-        margin-top: 10px;
+        margin-top: 20px;
     }
 
     .wrap_history {
