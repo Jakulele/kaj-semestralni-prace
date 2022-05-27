@@ -121,12 +121,15 @@ function localStorageToArray() {
 }
 
 function reloadHistory(material, diameter, diaUnits, volume, volumeUnits, glycol) {
+    const glycolEl = document.getElementById('glycol');
     document.getElementById('material').value = material;
     document.getElementById('diameter').value = diameter;
     document.getElementById('diaUnits').value = diaUnits;
     document.getElementById('volume').value = volume;
     document.getElementById('volumeUnits').value = volumeUnits;
-    document.getElementById('glycol').value = glycol;
+    glycolEl.value = glycol;
+
+    glycolEl.scrollIntoView(false);
 }
 
 function appendToHistory (values) {
@@ -158,10 +161,16 @@ function appendToHistory (values) {
         }
         if (value[4] === "kgh") {
             fourStripped = "kg/h";
+            value[3] *= 3600;
         }
-        const threeStripped = value[3].toString().substring(0, 10);
+        if (value[2] === "cm") {
+            value[1] /= 10;
+        }
+        if (value[2] === "dm") {
+            value[1] /= 100;
+        }
         const text = document.createTextNode(zeroStripped  + ", " + value[1] + "\xa0" + value[2] + ", " +
-            threeStripped + "\xa0" + fourStripped + ", " + value[5] + "\xa0% = " + value[6] + "\xa0m/s, " + value[7] + "\xa0Pa/m, " +
+            value[3] + "\xa0" + fourStripped + ", " + value[5] + "\xa0% = " + value[6] + "\xa0m/s, " + value[7] + "\xa0Pa/m, " +
         value[8] + " m, size: " + value[9]);
         span.appendChild(text);
         span.onclick = function() {reloadHistory(value[0], value[1], value[2], value[3], value[4], value[5])};
@@ -225,7 +234,6 @@ function drawCircle(r, svg) {
     inner.setAttributeNS(null, "fill", "darkgrey");
     svg.appendChild(inner);
 }
-
 
 // clear all input fields on btnClear click
 const btnClear = document.querySelector("#btnClear")
