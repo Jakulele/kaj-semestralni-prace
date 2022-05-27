@@ -197,6 +197,10 @@ div span:nth-child(2) {
         padding: 5% 30% 5% 30%;
     }
 
+    .history {
+        margin-top: 10px;
+    }
+
     .wrap_history {
         width: 97%;
         margin: 5% 0 0 0;
