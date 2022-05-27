@@ -3,6 +3,7 @@ import {Calculation} from "./class.js";
 // pressing Enter while in form simulates Submit button click
 const form = document.querySelector("form")
 
+// on Enter press while filling out form the form is sent
 form.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
         e.preventDefault();
@@ -44,6 +45,7 @@ function submit() {
         return
     }
 
+    // calculate input values
     let calculation = new Calculation(material, diameter, diaUnits, volume, volumeUnits, glycol);
 
     // update values to result fields
@@ -54,6 +56,7 @@ function submit() {
     const approxSizeMid = (calculation.approxSize.length / 2) | 0;
     drawCircle(calculation.approxSize[approxSizeMid], svgEl);
 
+    // save calculation values to local storage
     saveCalculation(calculation);
     const values = localStorageToArray();
     appendToHistory([values[0]]);
@@ -61,14 +64,20 @@ function submit() {
 
 const btnClearHistory = document.querySelector("#btnClearHistory")
 
+// empty the local storage
 btnClearHistory.addEventListener("click", function() {
     localStorage.clear();
     const values = localStorageToArray();
     appendToHistory(values);
 });
 
+/**
+ * Saves calculation to LocalStorage
+ * @param c calculation to be saved
+ */
 function saveCalculation(c) {
     const keys = Object.keys(localStorage);
+    // remove last added calculation when ten calculations are reached in the storage
     if (keys.length === 10) {
         let lowest = parseInt(keys[0])
         for (let i of keys) {
@@ -78,6 +87,7 @@ function saveCalculation(c) {
         }
         localStorage.removeItem(lowest.toString());
     }
+    // find the highest number among keys to maintain order in which the calculations were added
     let highest = -1;
     if (keys.length > 0) {
         highest = parseInt(keys[0])
@@ -87,16 +97,22 @@ function saveCalculation(c) {
             }
         }
     }
+    // extract useful information from the Calculation object
     const calculation = JSON.stringify([c.material, c.diameter, c.diaUnits,
         c.volume, c.volumeUnits, c.glycol, c.velocity.toFixed(2), c.prDrop | 0, c.eqL.toFixed(1), c.approxSize])
     localStorage.setItem((highest + 1).toString(), calculation);
 }
 
+// on window load all calculations saved in local storage are rendered
 window.onload = function () {
     const values = localStorageToArray();
     appendToHistory(values);
 }
 
+/**
+ * Extracts all calculations from LocalStorage and reverses their order so the newest one is always shown on top
+ * @returns {*[]} array of 0-10 calculations in order from newest to oldest
+ */
 function localStorageToArray() {
     let values = [];
     const keys = Object.keys(localStorage);
@@ -120,6 +136,15 @@ function localStorageToArray() {
     return values;
 }
 
+/**
+ * Resets values from selected history element into the form
+ * @param material
+ * @param diameter
+ * @param diaUnits
+ * @param volume
+ * @param volumeUnits
+ * @param glycol
+ */
 function reloadHistory(material, diameter, diaUnits, volume, volumeUnits, glycol) {
     const glycolEl = document.getElementById('glycol');
     document.getElementById('material').value = material;
@@ -129,9 +154,14 @@ function reloadHistory(material, diameter, diaUnits, volume, volumeUnits, glycol
     document.getElementById('volumeUnits').value = volumeUnits;
     glycolEl.value = glycol;
 
+    // in mobile view the form isn't visible together with the history so user is navigated back to it
     glycolEl.scrollIntoView(false);
 }
 
+/**
+ * Populate History element with values from LocalHistory refactored by {@link localStorageToArray}
+ * @param values array returned by {@link localStorageToArray}
+ */
 function appendToHistory (values) {
     const history = document.querySelector('.history');
     if (values.length === 0) {
@@ -235,7 +265,7 @@ function drawCircle(r, svg) {
     svg.appendChild(inner);
 }
 
-// clear all input fields on btnClear click
+// clear all input fields in form on btnClear click
 const btnClear = document.querySelector("#btnClear")
 
 btnClear.addEventListener("click", function() {
