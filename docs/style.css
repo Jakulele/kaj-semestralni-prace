@@ -194,7 +194,7 @@ div span:nth-child(2) {
     }
 
     svg {
-        padding: 5% 30% 5% 30%;
+        padding: 5px 30px 5px 30px;
     }
 
     .history {
@@ -204,11 +204,5 @@ div span:nth-child(2) {
     .wrap_history {
         width: 97%;
         margin: 5% 0 0 0;
-    }
-}
-
-@supports (-webkit-touch-callout: none) {
-    select {
-        background: darkgray;
     }
 }
