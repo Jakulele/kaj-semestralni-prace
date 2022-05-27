@@ -18,6 +18,7 @@ section {
     border-radius: 10px;
     background: #F3D250;
     width: 70%;
+    min-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -161,6 +162,7 @@ div span:nth-child(2) {
     section {
         display: revert;
         width: 100%;
+        min-width: revert;
     }
 
     form {
@@ -198,5 +200,11 @@ div span:nth-child(2) {
     .wrap_history {
         width: 97%;
         margin: 5% 0 0 0;
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    select {
+        background: darkgray;
     }
 }

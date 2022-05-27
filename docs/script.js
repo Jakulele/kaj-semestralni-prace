@@ -271,7 +271,7 @@ const btnClear = document.querySelector("#btnClear")
 btnClear.addEventListener("click", function() {
     const toClear = document.querySelectorAll("input[type='number'], select")
     for (const elem of toClear) {
-        elem.value = "0";
+        elem.value = "";
         elem.selectedIndex = "0";
     }
 });
